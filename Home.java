@@ -4,9 +4,14 @@ import javax.swing.*;
 
 import java.awt.Color;
 import java.awt.color.*;
+
 public class Home {
 
     public static void main(String[] args) {
+
+
+
+
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(300, 300);
@@ -18,5 +23,7 @@ public class Home {
         label.setBounds(100, 100, 100, 100);
         label.setForeground(Color.BLUE);
         frame.add(label);
+        String name = JOptionPane.showInputDialog("Give me  your name");
+        JLabel label2 = new JLabel("Hello " + name);
     }
 }
