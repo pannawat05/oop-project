@@ -25,5 +25,8 @@ public class Home {
         frame.add(label);
         String name = JOptionPane.showInputDialog("Give me  your name");
         JLabel label2 = new JLabel("Hello " + name);
+        label2.setBounds(100, 120, 100, 100);
+        label2.setForeground(Color.RED);
+        frame.add(label2);
     }
 }
