@@ -1,88 +1,7 @@
 import javax.swing.*;
+import Element.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Random;
-
-// Enum สำหรับระดับความยาก
-enum Level {
-    EASY(1), NORMAL(2), HARD(3);
-
-    private final int difficulty;
-
-    Level(int difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public int getDifficulty() {
-        return difficulty;
-    }
-}
-
-// คลาสสำหรับสุ่มลำดับปุ่มที่ต้องกระพริบ
-class ColorSequence {
-    private final ArrayList<Color> sequence = new ArrayList<>();
-    private final Random random = new Random();
-    private final Color[] colors = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
-
-    public void addRandomColor() {
-        sequence.add(colors[random.nextInt(colors.length)]);
-    }
-
-    public ArrayList<Color> getSequence() {
-        return sequence;
-    }
-
-    public void clearSequence() {
-        sequence.clear();
-    }
-}
-
-// คลาสสำหรับจัดการคะแนนและเลเวล
-class ScoreManager {
-    private int currentScore = 0;
-    private Level currentLevel = Level.EASY;
-    private JLabel scoreLabel;
-
-    public ScoreManager(JLabel scoreLabel) {
-        this.scoreLabel = scoreLabel;
-    }
-
-    public void increaseScore() {
-        currentScore += 10;
-        updateLevel();
-        updateScoreLabel();
-    }
-
-    private void updateLevel() {
-        if (currentScore >= 50) {
-            currentLevel = Level.HARD;
-        } else if (currentScore >= 20) {
-            currentLevel = Level.NORMAL;
-        } else {
-            currentLevel = Level.EASY;
-        }
-    }
-
-    public void resetScore() {
-        currentScore = 0;
-        currentLevel = Level.EASY;
-        updateScoreLabel();
-    }
-
-    public int getCurrentScore() {
-        return currentScore;
-    }
-
-    public Level getCurrentLevel() {
-        return currentLevel;
-    }
-
-    private void updateScoreLabel() {
-        SwingUtilities.invokeLater(() -> scoreLabel.setText("Score: " + currentScore));
-    }
-}
 
 public class SimonGameMain {
     private static final Color[] COLORS = {Color.RED, Color.BLUE, Color.GREEN, Color.YELLOW};
@@ -98,11 +17,9 @@ public class SimonGameMain {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(400, 400);
 
-            // ใช้ CardLayout สำหรับการเปลี่ยนหน้า
             CardLayout cardLayout = new CardLayout();
             JPanel mainPanel = new JPanel(cardLayout);
 
-            // หน้า Home
             JPanel homePanel = new JPanel();
             homePanel.setLayout(new GridLayout(3, 1));
 
@@ -121,7 +38,6 @@ public class SimonGameMain {
             homePanel.add(startButton);
             homePanel.add(highestScoreButton);
 
-            // หน้าเกม
             JPanel gamePanel = new JPanel();
             gamePanel.setLayout(new GridLayout(3, 2));
 
@@ -145,7 +61,7 @@ public class SimonGameMain {
             gamePanel.add(gameStartButton);
             gamePanel.add(scoreLabel);
 
-            // เพิ่มหน้า Home และ Game ลงใน CardLayout
+          
             mainPanel.add(homePanel, "home");
             mainPanel.add(gamePanel, "game");
 
@@ -156,7 +72,7 @@ public class SimonGameMain {
 
     private static void startGame() {
         playerSequence.clear();
-        colorSequence.clearSequence(); // Clear sequence at the start
+        colorSequence.clearSequence(); 
         colorSequence.addRandomColor();
         playSequence();
     }
@@ -166,7 +82,7 @@ public class SimonGameMain {
             try {
                 for (Color color : colorSequence.getSequence()) {
                     flashButton(color);
-                    Thread.sleep(500); // Reduced delay for quicker play
+                    Thread.sleep(500); 
                 }
             } catch (InterruptedException e) {
                 e.printStackTrace();
