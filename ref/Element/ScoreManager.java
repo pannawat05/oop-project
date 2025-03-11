@@ -1,4 +1,4 @@
-package Element;
+package ref.Element;
 import javax.swing.*;
 public class ScoreManager {
     private int currentScore = 0;

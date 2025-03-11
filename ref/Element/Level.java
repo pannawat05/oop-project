@@ -1,4 +1,4 @@
-package Element;
+package ref.Element;
 
 enum Level {
     EASY(1), NORMAL(2), HARD(3);
