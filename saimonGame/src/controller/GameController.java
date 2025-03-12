@@ -13,8 +13,8 @@ import src.ui.Page;
 import src.ui.UIManager;
 
 public class GameController {
-	public static final Color[] COLOR = { Color.decode("#8A0000"), Color.decode("#00A800"), Color.decode("#0000A8"),
-			Color.decode("#A8A800") };
+	public static final Color[] COLOR = { Color.decode("#550000"), Color.decode("#005500"), Color.decode("#000055"),
+			Color.decode("#555500") };
 	public static final Color[] COLOR_FLASH = { Color.red, Color.green, Color.blue, Color.yellow };
 	private ScoreManager score;
 	private UserInputHandler userInput;

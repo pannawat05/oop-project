@@ -10,17 +10,19 @@ public class BackgroundPanel extends JPanel {
 	private Image backgroundImage;
 
 	public BackgroundPanel(String imagePath) {
-        loadImage(imagePath);
-    }
+		loadImage(imagePath);
+	}
 
-    private void loadImage(String imagePath) {
-        ImageIcon icon = new ImageIcon(getClass().getResource(imagePath));
-        if (icon.getImage() != null) {
-            this.backgroundImage = icon.getImage();
-        } else {
-            System.out.println("Error: Background image not found at " + imagePath);
-        }
-    }
+	private void loadImage(String imagePath) {
+		java.net.URL imageUrl = getClass().getResource(imagePath);
+
+		if (imageUrl != null) {
+			ImageIcon icon = new ImageIcon(imageUrl);
+			this.backgroundImage = icon.getImage();
+		} else {
+			System.out.println("Error: Background image not found at " + imagePath);
+		}
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
