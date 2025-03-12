@@ -73,6 +73,8 @@ public class PlayPage implements Panel {
         // Add the 4 colored panels
         for (int i = 0; i < saimonBTN.length; i++) {
 			saimonBTN[i].setBackground(GameController.COLOR[i]);
+            saimonBTN[i].setOpaque(true);
+            saimonBTN[i].setBorderPainted(false);
 			int index = i;
 			saimonBTN[i].addActionListener(e -> controller.onSaimonBTNClick(GameController.COLOR[index]));
 			gridPanel.add(saimonBTN[i]);

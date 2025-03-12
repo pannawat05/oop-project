@@ -20,7 +20,7 @@ public class HomePage implements Panel {
 
 	@Override
 	public JPanel getPage(int w, int h) {
-		BackgroundPanel panel = new BackgroundPanel("/imgs/BG.jpg");
+		BackgroundPanel panel = new BackgroundPanel("./src/img/BG.jpg");
 		panel.setLayout(null);
 		// ("/home/cnzk/_Programming/Java/_KMITL/Project/oop-project/SimonGame/UI/src/img/BG.jpg"
 		panel.setBounds(0, 0, w, h);
