@@ -10,6 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import src.controller.FontLoader;
 import src.controller.GameController;
 
 public class HomePage implements Panel {

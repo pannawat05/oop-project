@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import javax.swing.JLayeredPane;
 
+import src.controller.FontLoader;
 import src.controller.GameController;
 import src.controller.ScoreManager;
 
@@ -82,13 +83,15 @@ public class PlayPage implements Panel {
 		gridPanel.setBackground(Color.BLACK);
 
 		for (int i = 0; i < simonBTN.length; i++) {
-			Color color = GameController.COLOR[i];
-			simonBTN[i].setBackground(color);
-			simonBTN[i].setOpaque(true);
-			simonBTN[i].setContentAreaFilled(true);
-			simonBTN[i].setBorderPainted(true);
-			simonBTN[i].setFocusPainted(false);
-			simonBTN[i].addActionListener(e -> controller.onSimonBTNClick(color));
+			int index = i;
+			Color color = GameController.COLOR[index];
+			simonBTN[index].setBackground(color);
+			simonBTN[index].setOpaque(true);
+			simonBTN[index].setContentAreaFilled(true);
+			simonBTN[index].setBorderPainted(true);
+			simonBTN[index].setFocusPainted(true);
+			simonBTN[index].addActionListener(
+					e -> controller.onSimonBTNClick(simonBTN[index].getBackground(), simonBTN[index]));
 			gridPanel.add(simonBTN[i]);
 		}
 		panel.add(gridPanel);
@@ -119,11 +122,10 @@ public class PlayPage implements Panel {
 			protected void paintComponent(Graphics g) {
 				super.paintComponent(g);
 				Graphics2D g2d = (Graphics2D) g;
-				g2d.setColor(new Color(0, 0, 0, 128));
+				g2d.setColor(new Color(0, 0, 0, 200));
 				g2d.fillRect(0, 0, getWidth(), getHeight());
 			}
 		};
-
 		pausePanel.setLayout(null);
 		pausePanel.setOpaque(false);
 		pausePanel.setBounds(0, 0, layeredPane.getWidth(), layeredPane.getHeight());
@@ -131,40 +133,20 @@ public class PlayPage implements Panel {
 		JLabel pauseLabel = new JLabel("Paused", JLabel.CENTER);
 		pauseLabel.setFont(FontLoader.loadFont(FontPath.CormorantGaramond, 100));
 		pauseLabel.setForeground(Color.blue);
-		pauseLabel.setBounds(0, 50, layeredPane.getWidth(), 100);
+		pauseLabel.setBounds(0, 50, layeredPane.getWidth() - 80, 100);
+		pausePanel.add(pauseLabel);
 
 		JButton continueBtn = new RoundedButton("Continue");
 		continueBtn.setFont(FontLoader.loadFont(FontPath.CormorantGaramond, 50));
-		continueBtn.setBounds((int)(layeredPane.getWidth() / 3.5), 250, 500, 80);
+		continueBtn.setBounds((int) (layeredPane.getWidth() / 3.75), 250, 500, 80);
 		continueBtn.setForeground(Color.white);
-		continueBtn.setBackground(new Color(255, 255, 255, 10));
+		continueBtn.setBackground(new Color(255, 255, 255, 50));
 		continueBtn.setOpaque(false);
 		continueBtn.setContentAreaFilled(false);
 		continueBtn.setFocusPainted(false);
 		continueBtn.setBorderPainted(true);
 		continueBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		continueBtn.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				continueBtn.setForeground(Color.yellow);
-				continueBtn.setBackground(new Color(255, 255, 0, 10));
-			}
-
-			public void mouseExited(MouseEvent e) {
-				continueBtn.setForeground(Color.white);
-				;
-				continueBtn.setBackground(new Color(255, 255, 255, 10));
-			}
-
-			public void mousePressed(MouseEvent e) {
-				continueBtn.setBackground(Color.ORANGE);
-			}
-
-			public void mouseReleased(MouseEvent e) {
-				continueBtn.setForeground(Color.white);
-				;
-				continueBtn.setBackground(new Color(255, 255, 255, 10));
-			}
-		});
+		continueBtn.addMouseListener(addMouseListener(continueBtn));
 		continueBtn.addActionListener(e -> {
 			Stream.of(simonBTN).forEach(btn -> btn.setEnabled(true));
 			controller.resumeGame();
@@ -172,47 +154,46 @@ public class PlayPage implements Panel {
 			layeredPane.revalidate();
 			layeredPane.repaint();
 		});
+		pausePanel.add(continueBtn);
+
+		JButton restart = new RoundedButton("Restart");
+		restart.setFont(FontLoader.loadFont(FontPath.CormorantGaramond, 50));
+		restart.setBounds((int) (layeredPane.getWidth() / 3.75), 350, 500, 80);
+		restart.setForeground(Color.white);
+		restart.setBackground(new Color(255, 255, 255, 50));
+		restart.setOpaque(false);
+		restart.setContentAreaFilled(false);
+		restart.setFocusPainted(false);
+		restart.setBorderPainted(true);
+		restart.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		restart.addMouseListener(addMouseListener(restart));
+		restart.addActionListener(e -> {
+			controller.resumeGame();
+			controller.startGame();
+			layeredPane.remove(pausePanel);
+			layeredPane.revalidate();
+			layeredPane.repaint();
+		});
+		pausePanel.add(restart);
 
 		JButton homeBtn = new RoundedButton("Back to Home");
 		homeBtn.setFont(FontLoader.loadFont(FontPath.CormorantGaramond, 50));
-		homeBtn.setBounds((int)(layeredPane.getWidth() / 3.5), 400, 500, 80);
+		homeBtn.setBounds((int) (layeredPane.getWidth() / 3.75), 450, 500, 80);
 		homeBtn.setForeground(Color.white);
-		homeBtn.setBackground(new Color(255, 255, 255, 10));
+		homeBtn.setBackground(new Color(255, 255, 255, 50));
 		homeBtn.setOpaque(false);
 		homeBtn.setContentAreaFilled(false);
 		homeBtn.setFocusPainted(false);
 		homeBtn.setBorderPainted(true);
 		homeBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		homeBtn.addMouseListener(new MouseAdapter() {
-			public void mouseEntered(MouseEvent e) {
-				homeBtn.setForeground(Color.yellow);
-				homeBtn.setBackground(new Color(255, 255, 0, 10));
-			}
-
-			public void mouseExited(MouseEvent e) {
-				homeBtn.setForeground(Color.white);
-				homeBtn.setBackground(new Color(255, 255, 255, 10));
-			}
-
-			public void mousePressed(MouseEvent e) {
-				homeBtn.setBackground(Color.ORANGE);
-			}
-
-			public void mouseReleased(MouseEvent e) {
-				homeBtn.setForeground(Color.white);
-				;
-				homeBtn.setBackground(new Color(255, 255, 255, 10));
-			}
-		});
+		homeBtn.addMouseListener(addMouseListener(homeBtn));
 		homeBtn.addActionListener(e -> {
+			controller.resumeGame();
 			layeredPane.remove(pausePanel);
 			layeredPane.revalidate();
 			layeredPane.repaint();
 			UIManager.switchPage(Page.Home);
 		});
-
-		pausePanel.add(pauseLabel);
-		pausePanel.add(continueBtn);
 		pausePanel.add(homeBtn);
 
 		layeredPane.add(pausePanel, JLayeredPane.POPUP_LAYER);
@@ -220,4 +201,32 @@ public class PlayPage implements Panel {
 		layeredPane.repaint();
 
 	}
+
+	private MouseAdapter addMouseListener(JButton button) {
+		return new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				button.setForeground(Color.yellow);
+				button.setBackground(new Color(255, 255, 0, 50));
+			}
+
+			@Override
+			public void mouseExited(MouseEvent e) {
+				button.setForeground(Color.white);
+				button.setBackground(new Color(255, 255, 255, 50));
+			}
+
+			@Override
+			public void mousePressed(MouseEvent e) {
+				button.setBackground(Color.ORANGE);
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				button.setForeground(Color.white);
+				button.setBackground(new Color(255, 255, 255, 50));
+			}
+		};
+	}
+
 }

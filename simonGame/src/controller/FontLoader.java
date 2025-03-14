@@ -1,4 +1,4 @@
-package src.ui;
+package src.controller;
 
 import java.awt.Font;
 import java.awt.FontFormatException;

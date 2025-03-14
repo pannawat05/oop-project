@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 
 import javax.swing.JButton;
@@ -17,17 +21,17 @@ public class GameController {
 	public static final Color[] COLOR = { Color.decode("#770000"), Color.decode("#007700"), Color.decode("#000077"),
 			Color.decode("#777700") };
 	public static final Color[] COLOR_FLASH = { Color.red, Color.green, Color.blue, Color.yellow };
-	// public static final String[] SOUND = {
-	// };
+
 	private ScoreManager score;
 	private UserInputHandler userInput;
 	private ColorSequence sequence;
 	private boolean isGameOver = false;
 	private boolean isPaused = false;
-	private int delayTime = 800; // Delay before sequence starts
-	private int flashTime = 500; // Flash duration
-	private int pauseTime = 200; // Pause between flashes
+	private int delayTime = 800;
+	private int flashTime = 500;
+	private int pauseTime = 200;
 	private JButton[] simonBTN;
+	private Map<JButton, Color> buttonColors = new HashMap<>();
 
 	public GameController() {
 		userInput = new UserInputHandler();
@@ -38,6 +42,7 @@ public class GameController {
 	public void setUIInteract(JButton[] simonBTN, JLabel[] scoreLabels) {
 		this.score.setScoreLabel(scoreLabels);
 		this.simonBTN = simonBTN;
+		resetButtonColors();
 	}
 
 	public void setUIInteract(JLabel overLabel) {
@@ -59,10 +64,10 @@ public class GameController {
 		}
 	}
 
-	public void onSimonBTNClick(Color color) {
+	public void onSimonBTNClick(Color color, JButton btn) {
 		if (isGameOver)
 			return;
-		userInput.addUserInput(color);
+		userInput.addUserInput(color, btn);
 		checkSequence();
 	}
 
@@ -73,19 +78,22 @@ public class GameController {
 		score.clear();
 		score.updateUI();
 		isGameOver = false;
+		resetButtonColors();
 		playSequence();
 	}
 
 	private void playSequence() {
+		Level level = score.getLevel();
 		Stream.of(simonBTN).forEach(btn -> {
 			btn.setEnabled(false);
 			btn.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 		});
+
 		new Thread(() -> {
 			try {
 				Thread.sleep(delayTime);
 				for (Color color : sequence.getSequence()) {
-					checkPause(); // เช็ค pause ก่อน flash
+					checkPause();
 					flashBTN(color);
 					System.out.println(color);
 					Thread.sleep(flashTime + pauseTime);
@@ -93,6 +101,9 @@ public class GameController {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} finally {
+				if (level == Level.HARD) {
+					swapButtonColors();
+				}
 				SwingUtilities.invokeLater(() -> Stream.of(simonBTN).forEach(btn -> {
 					btn.setEnabled(true);
 					btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -101,18 +112,40 @@ public class GameController {
 		}).start();
 	}
 
+	private void swapButtonColors() {
+		SwingUtilities.invokeLater(() -> {
+			List<Color> colorList = new ArrayList<>(Arrays.asList(COLOR));
+			Collections.shuffle(colorList);
+
+			for (int i = 0; i < simonBTN.length; i++) {
+				Color newColor = colorList.get(i);
+				JButton btn = simonBTN[i];
+				buttonColors.put(btn, newColor);
+				btn.setBackground(newColor);
+			}
+		});
+	}
+
+	private void resetButtonColors() {
+		for (int i = 0; i < simonBTN.length; i++) {
+			simonBTN[i].setBackground(COLOR[i]);
+			buttonColors.put(simonBTN[i], COLOR[i]);
+		}
+	}
+
 	private void flashBTN(Color color) {
 		for (JButton button : simonBTN) {
-			if (button.getBackground().equals(color)) {
-				int colorIDX = Arrays.asList(COLOR).indexOf(color);
+			if (buttonColors.get(button).equals(color)) {
+				int colorIDX = Arrays.asList(COLOR).indexOf(buttonColors.get(button));
 				if (colorIDX != -1) {
-					button.setBackground(COLOR_FLASH[colorIDX]);
+					Color flashColor = COLOR_FLASH[colorIDX];
+					button.setBackground(flashColor);
 					try {
 						Thread.sleep(flashTime);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					} finally {
-						button.setBackground(color);
+						button.setBackground(buttonColors.get(button));
 					}
 				}
 				break;

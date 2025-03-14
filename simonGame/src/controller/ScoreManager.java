@@ -5,6 +5,7 @@ import javax.swing.JLabel;
 public class ScoreManager {
 	private int score;
 	private static int highestScore;
+	private boolean isNewScore = false;
 	JLabel[] label = new JLabel[2];
 	JLabel overScore = new JLabel();
 
@@ -16,10 +17,19 @@ public class ScoreManager {
 		this.overScore = label;
 	}
 
+	public Level getLevel() {
+        if (score >= 10) {
+            return Level.HARD;
+        } else {
+            return Level.EASY;
+        }
+    }
+
 	public void addScore(int score) {
 		this.score += score;
 		if (this.score > highestScore) {
 			highestScore = this.score;
+			isNewScore = true;
 		}
 		updateUI();
 		System.out.println();
@@ -30,17 +40,16 @@ public class ScoreManager {
 		label[1].setText("High Score: " + highestScore);
 		if (overScore != null) {
 			updateGameOverUI();
-			System.out.println("Hello World");
 		}
 	}
 
 	public void updateGameOverUI() {
-		boolean isNewScore = score > highestScore;
 		overScore.setText(isNewScore? "New Score: " + this.score :"Score: " + this.score);
 	}
 
 	public void clear() {
 		score = 0;
+		isNewScore = false;
 	}
 
 	public int getScore() {
