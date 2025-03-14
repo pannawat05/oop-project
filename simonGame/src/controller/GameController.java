@@ -2,6 +2,8 @@ package src.controller;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,11 +20,6 @@ import javax.swing.SwingUtilities;
 import src.ui.Page;
 import src.ui.UIManager;
 
-
-
-
-
-
 public class GameController {
 
 	public static final Color[] COLOR = { Color.decode("#770000"), Color.decode("#007700"), Color.decode("#000077"),
@@ -34,7 +31,7 @@ public class GameController {
 	private ColorSequence sequence;
 	private boolean isGameOver = false;
 	private boolean isPaused = false;
-	private int delayTime = 800;
+	private int delayTime = 1000;
 	private int flashTime = 500;
 	private int pauseTime = 200;
 	private JButton[] simonBTN;
@@ -75,11 +72,12 @@ public class GameController {
 		if (isGameOver)
 			return;
 		userInput.addUserInput(color, btn);
+		flashBTN(color);
 		checkSequence();
 	}
 
 	public void startGame() {
-		MusicPlayer.playSound("/src/assets/sound/click-start.wav");
+		// MusicPlayer.playSound("/src/assets/sound/click-start.wav");
 		userInput.clear();
 		sequence.clear();
 		sequence.addRandomColor();
@@ -130,9 +128,8 @@ public class GameController {
 				JButton btn = simonBTN[i];
 				buttonColors.put(btn, newColor);
 				btn.setBackground(newColor);
-				
 			}
-		});
+			});
 	}
 
 	private void resetButtonColors() {
@@ -172,6 +169,7 @@ public class GameController {
 	}
 	
 	private void checkSequence() {
+		System.out.println(userInput.isMatching(sequence.getSequence()));
 		if (!userInput.isMatching(sequence.getSequence())) {
 			MusicPlayer.playSound("/src/assets/sound/GameOver.wav");
 			gameOver();
@@ -195,9 +193,8 @@ public class GameController {
 			if (lastClickedBtn != null) {
 				Color originalColor = lastClickedBtn.getBackground();
 				int idx = Arrays.asList(COLOR).indexOf(originalColor);
-				System.out.println(COLOR_FLASH[idx] + " " + idx);
-				lastClickedBtn.setBackground(COLOR_FLASH[idx]);
-				Thread.sleep(1500);
+				lastClickedBtn.setBackground(idx > -1 ? COLOR_FLASH[idx] : Color.white);
+				Thread.sleep(1000);
 				lastClickedBtn.setBackground(originalColor);
 			}
 		} catch (InterruptedException e) {

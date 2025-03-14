@@ -18,7 +18,7 @@ public class ScoreManager {
 	}
 
 	public Level getLevel() {
-        if (score >= 10) {
+        if (score >= 15) {
             return Level.HARD;
         } else {
             return Level.EASY;

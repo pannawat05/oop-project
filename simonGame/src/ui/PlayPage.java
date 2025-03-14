@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.stream.Stream;
 import src.controller.MusicPlayer;
 
@@ -92,11 +93,28 @@ public class PlayPage implements Panel {
 			simonBTN[index].setContentAreaFilled(true);
 			simonBTN[index].setBorderPainted(true);
 			simonBTN[index].setFocusPainted(true);
+			simonBTN[index].addMouseListener(new MouseAdapter() {
+				Color originalColor = simonBTN[index].getBackground();
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					int idx = Arrays.asList(GameController.COLOR).indexOf(color);
+					simonBTN[index].setBackground(GameController.COLOR_FLASH[idx]);
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					try {
+						Thread.sleep(150);
+					} catch (InterruptedException ex) {
+						Thread.currentThread().interrupt();
+					}
+					simonBTN[index].setBackground(originalColor);
+				}
+			});
 			simonBTN[index].addActionListener(
 					e -> {
-						controller.onSimonBTNClick(simonBTN[index].getBackground(), simonBTN[index]);
-						MusicPlayer click = new MusicPlayer();
-					
+						controller.onSimonBTNClick(color, simonBTN[index]);
 					});
 			gridPanel.add(simonBTN[i]);
 		}
