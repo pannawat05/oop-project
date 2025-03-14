@@ -169,6 +169,21 @@ public class GameController {
 
 	private void gameOver() {
 		isGameOver = true;
+		try {
+			JButton lastClickedBtn = userInput.getLastINP();
+			if (lastClickedBtn != null) {
+				Color originalColor = lastClickedBtn.getBackground();
+				int idx = Arrays.asList(COLOR).indexOf(originalColor);
+				System.out.println(COLOR_FLASH[idx] + " " + idx);
+				lastClickedBtn.setBackground(COLOR_FLASH[idx]);
+				// MusicPlayer.playSound("/src/assets/sound/GameOver.wav");
+				Thread.sleep(1500);
+				lastClickedBtn.setBackground(originalColor);
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 		System.out.println("Game Over!");
 		UIManager.switchPage(Page.GameOver);
 	}
