@@ -9,6 +9,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.stream.Stream;
+import src.controller.MusicPlayer;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,6 +22,7 @@ import src.controller.GameController;
 import src.controller.ScoreManager;
 
 public class PlayPage implements Panel {
+
 	private GameController controller;
 	private JButton[] simonBTN = new JButton[4];
 	private JLabel[] scoreLabels = new JLabel[2];
@@ -75,6 +77,10 @@ public class PlayPage implements Panel {
 
 		// Game grid
 		int gridSize = 400;
+		
+	
+		
+
 		int gridX = (int) ((w - gridSize) / 2.25);
 		int gridY = (int) ((h - gridSize) / 2.5);
 
@@ -91,7 +97,11 @@ public class PlayPage implements Panel {
 			simonBTN[index].setBorderPainted(true);
 			simonBTN[index].setFocusPainted(true);
 			simonBTN[index].addActionListener(
-					e -> controller.onSimonBTNClick(simonBTN[index].getBackground(), simonBTN[index]));
+					e -> {
+						controller.onSimonBTNClick(simonBTN[index].getBackground(), simonBTN[index]);
+						MusicPlayer click = new MusicPlayer();
+					
+					});
 			gridPanel.add(simonBTN[i]);
 		}
 		panel.add(gridPanel);

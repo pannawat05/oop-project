@@ -14,14 +14,21 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
+
 import src.ui.Page;
 import src.ui.UIManager;
 
+
+
+
+
+
 public class GameController {
+
 	public static final Color[] COLOR = { Color.decode("#770000"), Color.decode("#007700"), Color.decode("#000077"),
 			Color.decode("#777700") };
 	public static final Color[] COLOR_FLASH = { Color.red, Color.green, Color.blue, Color.yellow };
-
+    
 	private ScoreManager score;
 	private UserInputHandler userInput;
 	private ColorSequence sequence;
@@ -72,6 +79,7 @@ public class GameController {
 	}
 
 	public void startGame() {
+		MusicPlayer.playSound("/src/assets/sound/click-start.wav");
 		userInput.clear();
 		sequence.clear();
 		sequence.addRandomColor();
@@ -155,10 +163,12 @@ public class GameController {
 
 	private void checkSequence() {
 		if (!userInput.isMatching(sequence.getSequence())) {
+			MusicPlayer.playSound("/src/assets/sound/GameOver.wav");
 			gameOver();
 			return;
 		}
 		if (sequence.isComplete(userInput.getUserInput())) {
+			MusicPlayer.playSound("/src/assets/sound/click.wav");
 			score.addScore(1);
 			userInput.clear();
 			sequence.addRandomColor();
@@ -168,6 +178,7 @@ public class GameController {
 	}
 
 	private void gameOver() {
+
 		isGameOver = true;
 		try {
 			JButton lastClickedBtn = userInput.getLastINP();
@@ -176,7 +187,6 @@ public class GameController {
 				int idx = Arrays.asList(COLOR).indexOf(originalColor);
 				System.out.println(COLOR_FLASH[idx] + " " + idx);
 				lastClickedBtn.setBackground(COLOR_FLASH[idx]);
-				// MusicPlayer.playSound("/src/assets/sound/GameOver.wav");
 				Thread.sleep(1500);
 				lastClickedBtn.setBackground(originalColor);
 			}
