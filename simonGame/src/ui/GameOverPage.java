@@ -61,20 +61,21 @@ public class GameOverPage implements Panel {
 	private JButton createTextButton(String text) {
 		JButton button = new RoundedButton(text);
 		button.setFont(FontLoader.loadFont(FontPath.CormorantGaramond, 36));
-		button.setForeground(Color.WHITE);
-		button.setBackground(Color.BLACK);
+		button.setForeground(Color.black);
+		button.setBackground(Color.white);
 		button.setContentAreaFilled(false);
+		button.setOpaque(true);
 		button.setFocusPainted(false);
 		button.setBorderPainted(true);
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		button.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {
-				button.setForeground(Color.yellow);
+				button.setForeground(Color.green);
 				button.setBackground(new Color(255, 255, 0, 10));
 			}
 
 			public void mouseExited(MouseEvent e) {
-				button.setForeground(Color.white);;
+				button.setForeground(Color.black);;
 				button.setBackground(new Color(255, 255, 255, 10));
 			}
 
@@ -83,7 +84,7 @@ public class GameOverPage implements Panel {
 			}
 
 			public void mouseReleased(MouseEvent e) {
-				button.setForeground(Color.white);;
+				button.setForeground(Color.black);;
 				button.setBackground(new Color(255, 255, 255, 10));
 			}
 		});

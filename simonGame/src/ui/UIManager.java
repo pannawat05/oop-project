@@ -20,7 +20,7 @@ public class UIManager {
 	}
 
 	public UIManager(int w, int h, GameController controller) {
-		frame = new JFrame("Saimon Game");
+		frame = new JFrame("Simon Game");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(w, h);
 		frame.setMinimumSize(new Dimension(w, h));

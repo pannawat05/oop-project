@@ -23,7 +23,7 @@ public class HomePage implements Panel {
 
 	@Override
 	public JPanel getPage(int w, int h) {
-		BackgroundPanel panel = new BackgroundPanel("/src/assets/imgs/BG-2.gif");
+		BackgroundPanel panel = new BackgroundPanel("/src/assets/imgs/BG.jpg");
 		panel.setLayout(null);
 		panel.setBounds(0, 0, w, h);
 
@@ -37,14 +37,15 @@ public class HomePage implements Panel {
 		playBTN.setBounds(100, (int) (h / 2.5), 250, 100);
 		playBTN.setFont(FontLoader.loadFont(FontPath.CormorantGaramond, 48));
 		playBTN.setForeground(Color.white);
-		playBTN.setBackground(new Color(255, 255, 255, 10));
-		playBTN.setContentAreaFilled(false);
+		// playBTN.setBackground(new Color(255, 255, 255, 150));
+		playBTN.setOpaque(true);
+		playBTN.setContentAreaFilled(true);
 		playBTN.setFocusPainted(false);
-		playBTN.setBorderPainted(true);
+		playBTN.setBorderPainted(false);
 		playBTN.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		playBTN.addActionListener(e -> {
-			controller.startGame();
 			UIManager.switchPage(Page.Play);
+			controller.startGame();
 		});
 		playBTN.addMouseListener(new MouseAdapter() {
 			public void mouseEntered(MouseEvent e) {

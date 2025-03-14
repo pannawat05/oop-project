@@ -77,10 +77,6 @@ public class PlayPage implements Panel {
 
 		// Game grid
 		int gridSize = 400;
-		
-	
-		
-
 		int gridX = (int) ((w - gridSize) / 2.25);
 		int gridY = (int) ((h - gridSize) / 2.5);
 
@@ -149,9 +145,9 @@ public class PlayPage implements Panel {
 		JButton continueBtn = new RoundedButton("Continue");
 		continueBtn.setFont(FontLoader.loadFont(FontPath.CormorantGaramond, 50));
 		continueBtn.setBounds((int) (layeredPane.getWidth() / 3.75), 250, 500, 80);
-		continueBtn.setForeground(Color.white);
+		continueBtn.setForeground(Color.black);
 		continueBtn.setBackground(new Color(255, 255, 255, 50));
-		continueBtn.setOpaque(false);
+		continueBtn.setOpaque(true);
 		continueBtn.setContentAreaFilled(false);
 		continueBtn.setFocusPainted(false);
 		continueBtn.setBorderPainted(true);
@@ -169,7 +165,7 @@ public class PlayPage implements Panel {
 		JButton restart = new RoundedButton("Restart");
 		restart.setFont(FontLoader.loadFont(FontPath.CormorantGaramond, 50));
 		restart.setBounds((int) (layeredPane.getWidth() / 3.75), 350, 500, 80);
-		restart.setForeground(Color.white);
+		restart.setForeground(Color.black);
 		restart.setBackground(new Color(255, 255, 255, 50));
 		restart.setOpaque(false);
 		restart.setContentAreaFilled(false);
@@ -189,7 +185,7 @@ public class PlayPage implements Panel {
 		JButton homeBtn = new RoundedButton("Back to Home");
 		homeBtn.setFont(FontLoader.loadFont(FontPath.CormorantGaramond, 50));
 		homeBtn.setBounds((int) (layeredPane.getWidth() / 3.75), 450, 500, 80);
-		homeBtn.setForeground(Color.white);
+		homeBtn.setForeground(Color.black);
 		homeBtn.setBackground(new Color(255, 255, 255, 50));
 		homeBtn.setOpaque(false);
 		homeBtn.setContentAreaFilled(false);
@@ -216,13 +212,13 @@ public class PlayPage implements Panel {
 		return new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				button.setForeground(Color.yellow);
+				button.setForeground(Color.GREEN);
 				button.setBackground(new Color(255, 255, 0, 50));
 			}
 
 			@Override
 			public void mouseExited(MouseEvent e) {
-				button.setForeground(Color.white);
+				button.setForeground(Color.black);
 				button.setBackground(new Color(255, 255, 255, 50));
 			}
 
@@ -233,7 +229,7 @@ public class PlayPage implements Panel {
 
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				button.setForeground(Color.white);
+				button.setForeground(Color.black);
 				button.setBackground(new Color(255, 255, 255, 50));
 			}
 		};

@@ -130,6 +130,7 @@ public class GameController {
 				JButton btn = simonBTN[i];
 				buttonColors.put(btn, newColor);
 				btn.setBackground(newColor);
+				
 			}
 		});
 	}
@@ -137,9 +138,14 @@ public class GameController {
 	private void resetButtonColors() {
 		for (int i = 0; i < simonBTN.length; i++) {
 			simonBTN[i].setBackground(COLOR[i]);
+			simonBTN[i].setOpaque(true); 
+			simonBTN[i].setContentAreaFilled(false); 
+			simonBTN[i].setBorderPainted(false);
+
 			buttonColors.put(simonBTN[i], COLOR[i]);
 		}
 	}
+	
 
 	private void flashBTN(Color color) {
 		for (JButton button : simonBTN) {
@@ -147,20 +153,24 @@ public class GameController {
 				int colorIDX = Arrays.asList(COLOR).indexOf(buttonColors.get(button));
 				if (colorIDX != -1) {
 					Color flashColor = COLOR_FLASH[colorIDX];
+	
 					button.setBackground(flashColor);
-					try {
-						Thread.sleep(flashTime);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					} finally {
+					button.setOpaque(true);
+					button.setContentAreaFilled(false);
+	
+					javax.swing.Timer timer = new javax.swing.Timer(flashTime, e -> {
 						button.setBackground(buttonColors.get(button));
-					}
+						button.setOpaque(true);
+						button.setContentAreaFilled(false);
+					});
+					timer.setRepeats(false);
+					timer.start();
 				}
 				break;
 			}
 		}
 	}
-
+	
 	private void checkSequence() {
 		if (!userInput.isMatching(sequence.getSequence())) {
 			MusicPlayer.playSound("/src/assets/sound/GameOver.wav");
