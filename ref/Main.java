@@ -1,8 +1,9 @@
-import ref.SimonGameMain;
+
+import src.SimonGame;
 
 public class Main {
     public static void main(String[] args) {
-        SimonGameMain game = new SimonGameMain();
-        game.run(args);
+        SimonGame game = new SimonGame();
+        game.run();
     }
 }
