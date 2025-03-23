@@ -2,6 +2,9 @@ package utils;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class SimonColor {
 
@@ -34,18 +37,39 @@ public class SimonColor {
 	};
 
 	public static void swapCOLOR() {
-		int random1 = (int) (Math.random() * DEFAULT.size());
-		int random2 = (int) (Math.random() * DEFAULT.size());
+        int size = DEFAULT.size();
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            indices.add(i);
+        }
 
-		Color tempDefault = DEFAULT.get(random1);
-		Color tempFlash = FLASH.get(random1);
+        Random rand = new Random();
+        do {
+            Collections.shuffle(indices, rand);
+        } while (!isValidShuffle(indices));
 
-		DEFAULT.set(random1, DEFAULT.get(random2));
-		FLASH.set(random1, FLASH.get(random2));
+        List<Color> newDefault = new ArrayList<>(DEFAULT);
+        List<Color> newFlash = new ArrayList<>(FLASH);
 
-		DEFAULT.set(random2, tempDefault);
-		FLASH.set(random2, tempFlash);
-	}
+        for (int i = 0; i < size; i++) {
+            newDefault.set(i, DEFAULT.get(indices.get(i)));
+            newFlash.set(i, FLASH.get(indices.get(i)));
+        }
+
+        for (int i = 0; i < size; i++) {
+            DEFAULT.set(i, newDefault.get(i));
+            FLASH.set(i, newFlash.get(i));
+        }
+    }
+
+	private static boolean isValidShuffle(List<Integer> indices) {
+        for (int i = 0; i < indices.size(); i++) {
+            if (indices.get(i) == i) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 	public static void reset() {
 		DEFAULT = new ArrayList<Color>() {
