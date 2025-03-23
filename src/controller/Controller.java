@@ -90,7 +90,7 @@ public class Controller {
 			Thread.sleep(1000);
 			switchPage(Page.GAME_OVER);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 }
