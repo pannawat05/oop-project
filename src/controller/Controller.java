@@ -16,12 +16,14 @@ public class Controller {
 	private UIManager ui;
 	private GameState state;
 	private MusicPlayer correctSound;
+	MusicPlayer gameOverSound;
 	private boolean isPaused = false;
 
 	public Controller() {
 		ui = new UIManager(this);
 		state = new GameState();
 		correctSound = new MusicPlayer("resources/sounds/correctSound.wav");
+	    gameOverSound = new MusicPlayer("resources/sounds/GameOver.wav");
 	}
 
 	public void switchPage(Page page) {
@@ -87,6 +89,7 @@ public class Controller {
 	}
 
 	public void gameOver() {
+		gameOverSound.playSound();
 		switchPage(Page.GAME_OVER);
 	}
 }

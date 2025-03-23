@@ -5,7 +5,7 @@ public enum Level {
 	HARD;
 
 	public static Level getLevel(int score) {
-		if (score > 1) {
+		if (score >= 7) {
 			return HARD;
 		}
 		return EASY;
