@@ -90,7 +90,7 @@ public class Controller {
 	}
 
 	public void gameOver() {
-		// gameOverSound.playSound();
+		gameOverSound.playSound();
 		switchPage(Page.GAME_OVER);
 	}
 }

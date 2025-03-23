@@ -31,7 +31,7 @@ public class GamePlay extends PagePanel {
 	private JLabel hightScoreLabel;
 	private MusicPlayer roundCountDown;
 	private ArrayList<MusicPlayer> clickBTN;
-	private final int FLASH_TIME = 1000;
+	private final int FLASH_TIME = 650;
 
 	public GamePlay(Controller controller) {
 		super(controller);
@@ -116,7 +116,6 @@ public class GamePlay extends PagePanel {
 
 		// pause panel
 		JLabel pauseLabel = new JLabel("Paused", JLabel.CENTER);
-		pauseLabel.setForeground(Color.blue);
 		pausePanel.add(pauseLabel);
 
 		RoundedBTN continueBtn = new RoundedBTN("Continue");
@@ -134,7 +133,6 @@ public class GamePlay extends PagePanel {
 		pausePanel.add(continueBtn);
 
 		RoundedBTN restart = new RoundedBTN("Restart");
-		restart.setForeground(Color.black);
 		restart.setBackground(new Color(255, 255, 255, 50));
 		restart.setOpaque(true);
 		restart.setBorderPainted(true);
@@ -149,7 +147,6 @@ public class GamePlay extends PagePanel {
 		pausePanel.add(restart);
 
 		RoundedBTN homeBtn = new RoundedBTN("Back to Home");
-		homeBtn.setForeground(Color.black);
 		homeBtn.setBackground(new Color(255, 255, 255, 50));
 		homeBtn.setOpaque(true);
 		homeBtn.setBorderPainted(true);
