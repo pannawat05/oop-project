@@ -10,13 +10,18 @@ import utils.SimonColor;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import utils.MusicPlayer;
+
 public class Controller {
 	private UIManager ui;
 	private GameState state;
+	private MusicPlayer correctSound;
+	private boolean isPaused = false;
 
 	public Controller() {
 		ui = new UIManager(this);
 		state = new GameState();
+		correctSound = new MusicPlayer("resources/sounds/correctSound.wav");
 	}
 
 	public void switchPage(Page page) {
@@ -32,12 +37,19 @@ public class Controller {
 		ui.playSequence();
 	}
 
-	public void pauseGame() {
-
+	public synchronized void pauseGame() {
+		isPaused = true;
 	}
 
-	public void resumeGame() {
+	public synchronized void resumeGame() {
+		isPaused = false;
+		notifyAll();
+	}
 
+	public synchronized void checkPause() throws InterruptedException {
+		while (isPaused) {
+			wait();
+		}
 	}
 
 	public void onUserInput(Color Color) {
@@ -62,6 +74,7 @@ public class Controller {
 				e.printStackTrace();
 			}
 		} else if (state.checkIsComplete()) {
+			correctSound.playSound();
 			state.increteScore();
 			state.nextRound();
 			ui.updateScoreUI(state.getScore());

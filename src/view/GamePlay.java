@@ -1,10 +1,14 @@
 package view;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -18,6 +22,7 @@ import model.Score;
 import utils.Loader;
 import utils.SimonColor;
 import utils.MusicPlayer;
+import utils.Page;
 
 public class GamePlay extends PagePanel {
 
@@ -42,35 +47,62 @@ public class GamePlay extends PagePanel {
 	protected void drawPage() {
 		JLayeredPane layeredPane = new JLayeredPane();
 
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setBackground(Color.decode("#111111"));
+
+		JPanel pausePanel = new JPanel() {
+			@Override
+			protected void paintComponent(Graphics g) {
+				super.paintComponent(g);
+				Graphics2D g2d = (Graphics2D) g;
+				g2d.setColor(new Color(0, 0, 0, 200));
+				g2d.fillRect(0, 0, getWidth(), getHeight());
+			}
+		};
+		pausePanel.setLayout(null);
+		pausePanel.setOpaque(false);
+		pausePanel.addMouseListener(new MouseAdapter() {
+		});
+
 		// pause button ---------------------
 		JButton pause = new JButton("❚❚");
-		// pause.setBounds(0, 0, 100, 100);
 		pause.setForeground(Color.WHITE);
 		pause.setFocusPainted(false);
 		pause.setBorderPainted(false);
 		pause.setContentAreaFilled(false);
 		pause.setOpaque(false);
-		add(pause);
+		pause.addActionListener(e -> {
+			layeredPane.add(pausePanel, JLayeredPane.POPUP_LAYER);
+			layeredPane.revalidate();
+			layeredPane.repaint();
+			controller.pauseGame();
+		});
+		panel.add(pause);
 		// -----------------------------------
 
 		// Score labels ---------------------
 		scoreLabel = new JLabel("Score: xxx");
 		scoreLabel.setForeground(Color.WHITE);
 		scoreLabel.setBackground(Color.RED);
-		add(scoreLabel);
+		panel.add(scoreLabel);
 		// -----------------------------------
 
 		// Hight score labels ---------------------
 		hightScoreLabel = new JLabel("Hight Score: xxx");
 		hightScoreLabel.setForeground(Color.WHITE);
 		hightScoreLabel.setBackground(Color.RED);
-		add(hightScoreLabel);
+		panel.add(hightScoreLabel);
 		// -----------------------------------
 
 		// Simon buttons ---------------------
 		JPanel gridPanel = new JPanel(new GridLayout(2, 2, 10, 10));
 		gridPanel.setBackground(Color.BLACK);
-		add(gridPanel);
+		panel.add(gridPanel);
+		// -----------------------------------
+
+		layeredPane.add(panel, JLayeredPane.DEFAULT_LAYER);
+		add(layeredPane);
 
 		for (int i = 0; i < SimonColor.DEFAULT.size(); i++) {
 			SimonBTN btn = new SimonBTN(SimonColor.DEFAULT.get(i), SimonColor.FLASH.get(i), FLASH_TIME);
@@ -82,12 +114,66 @@ public class GamePlay extends PagePanel {
 			gridPanel.add(btn);
 		}
 
+		// pause panel
+		JLabel pauseLabel = new JLabel("Paused", JLabel.CENTER);
+		pauseLabel.setForeground(Color.blue);
+		pausePanel.add(pauseLabel);
+
+		RoundedBTN continueBtn = new RoundedBTN("Continue");
+		continueBtn.setForeground(Color.black);
+		continueBtn.setBackground(new Color(255, 255, 255, 50));
+		continueBtn.setOpaque(false);
+		continueBtn.setBorderPainted(true);
+		continueBtn.setHoverEffect(Color.YELLOW, new Color(255, 255, 0, 10));
+		continueBtn.addActionListener(e -> {
+			controller.resumeGame();
+			layeredPane.remove(pausePanel);
+			layeredPane.revalidate();
+			layeredPane.repaint();
+		});
+		pausePanel.add(continueBtn);
+
+		RoundedBTN restart = new RoundedBTN("Restart");
+		restart.setForeground(Color.black);
+		restart.setBackground(new Color(255, 255, 255, 50));
+		restart.setOpaque(false);
+		restart.setBorderPainted(true);
+		restart.setHoverEffect(Color.YELLOW, new Color(255, 255, 0, 10));
+		restart.addActionListener(e -> {
+			controller.resumeGame();
+			controller.startGame();
+			layeredPane.remove(pausePanel);
+			layeredPane.revalidate();
+			layeredPane.repaint();
+		});
+		pausePanel.add(restart);
+
+		RoundedBTN homeBtn = new RoundedBTN("Back to Home");
+		homeBtn.setForeground(Color.black);
+		homeBtn.setBackground(new Color(255, 255, 255, 50));
+		homeBtn.setOpaque(false);
+		homeBtn.setBorderPainted(true);
+		homeBtn.setHoverEffect(Color.YELLOW, new Color(255, 255, 0, 10));
+		homeBtn.addActionListener(e -> {
+			controller.resumeGame();
+			layeredPane.remove(pausePanel);
+			layeredPane.revalidate();
+			layeredPane.repaint();
+			controller.switchPage(Page.HOME);
+		});
+		pausePanel.add(homeBtn);
 		addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentResized(ComponentEvent e) {
 				int w = getWidth();
 				int h = getHeight();
 				Font font = Loader.loadCustomFont("resources/fonts/RobotoSlab-VariableFont_wght.ttf", w / 40f);
+				Font pauseTitleFont = Loader.loadCustomFont("resources/fonts/RobotoSlab-VariableFont_wght.ttf",
+						w / 10f);
+
+				layeredPane.setBounds(0, 0, w, h);
+
+				panel.setBounds(0, 0, w, h);
 
 				pause.setBounds(40, 30, w / 10, h / 10);
 				pause.setFont(getFont().deriveFont(w / 40f));
@@ -104,6 +190,20 @@ public class GamePlay extends PagePanel {
 				int gridY = (int) ((h - gridHeight) / 2.5);
 
 				gridPanel.setBounds(gridX, gridY, gridWidth, gridHeight);
+
+				pausePanel.setBounds(0, 0, w, h);
+
+				pauseLabel.setBounds(0, 50, w, 100);
+				pauseLabel.setFont(pauseTitleFont);
+
+				continueBtn.setBounds((int) (w / 2.6), (int) (h / 3), (w / 4), (h / 10));
+				continueBtn.setFont(font);
+
+				restart.setBounds((int) (w / 2.6), (int) (h / 2), (w / 4), (h / 10));
+				restart.setFont(font);
+
+				homeBtn.setBounds((int) (w / 2.6), (int) (h / 1.5), (w / 4), (h / 10));
+				homeBtn.setFont(font);
 			}
 		});
 	}
@@ -136,13 +236,13 @@ public class GamePlay extends PagePanel {
 
 	public void playSequence() {
 		setEnableBTN(false);
-
 		new Thread(() -> {
 			try {
 				roundCountDown.playSound();
 				Thread.sleep(4200);
 
 				for (Color color : controller.getSequence()) {
+					controller.checkPause();
 					SimonBTN matchingButton = simonBTN.stream()
 							.filter(btn -> btn.getDefaultColor().equals(color))
 							.findFirst()
