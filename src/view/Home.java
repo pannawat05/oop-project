@@ -66,16 +66,14 @@ public class Home extends PagePanel {
 
 		// Button Start -------------------------------
 		RoundedBTN startBTN = new RoundedBTN("Start");
-	startBTN.setBackground(new Color(0,0,1));
-	startBTN.setOpaque(true);
-	startBTN.setContentAreaFilled(true);
-	startBTN.setFocusPainted(false);
-	startBTN.setBorderPainted(true);
+		startBTN.setBackground(new Color(255,255,255));
+		startBTN.setOpaque(false);
+		startBTN.setBorderPainted(true);
+		startBTN.setHoverEffect(Color.decode("#74662e"), Color.decode("#ffde59"));
 		startBTN.addActionListener(e -> {
 			controller.switchPage(Page.GAME_PLAY);
 			buttonSound.playSound();
 		});
-		startBTN.setHoverEffect(Color.YELLOW, new Color(255, 255, 0, 10));
 		add(startBTN);
 		// ---------------------------------------------
 

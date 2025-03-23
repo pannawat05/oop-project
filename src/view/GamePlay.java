@@ -116,14 +116,14 @@ public class GamePlay extends PagePanel {
 
 		// pause panel
 		JLabel pauseLabel = new JLabel("Paused", JLabel.CENTER);
+		pauseLabel.setForeground(Color.BLUE);
 		pausePanel.add(pauseLabel);
 
 		RoundedBTN continueBtn = new RoundedBTN("Continue");
-		continueBtn.setForeground(Color.black);
-		continueBtn.setBackground(new Color(255, 255, 255, 50));
-		continueBtn.setOpaque(true);
+		continueBtn.setBackground(new Color(255,255,255));
+		continueBtn.setOpaque(false);
 		continueBtn.setBorderPainted(true);
-		continueBtn.setHoverEffect(Color.YELLOW, new Color(255, 255, 0, 10));
+		continueBtn.setHoverEffect(Color.decode("#74662e"), Color.decode("#ffde59"));
 		continueBtn.addActionListener(e -> {
 			controller.resumeGame();
 			layeredPane.remove(pausePanel);
@@ -133,10 +133,10 @@ public class GamePlay extends PagePanel {
 		pausePanel.add(continueBtn);
 
 		RoundedBTN restart = new RoundedBTN("Restart");
-		restart.setBackground(new Color(255, 255, 255, 50));
-		restart.setOpaque(true);
+		restart.setBackground(new Color(255,255,255));
+		restart.setOpaque(false);
 		restart.setBorderPainted(true);
-		restart.setHoverEffect(Color.YELLOW, new Color(255, 255, 0, 10));
+		restart.setHoverEffect(Color.decode("#74662e"), Color.decode("#ffde59"));
 		restart.addActionListener(e -> {
 			controller.resumeGame();
 			controller.startGame();
@@ -147,10 +147,10 @@ public class GamePlay extends PagePanel {
 		pausePanel.add(restart);
 
 		RoundedBTN homeBtn = new RoundedBTN("Back to Home");
-		homeBtn.setBackground(new Color(255, 255, 255, 50));
-		homeBtn.setOpaque(true);
+		homeBtn.setBackground(new Color(255,255,255));
+		homeBtn.setOpaque(false);
 		homeBtn.setBorderPainted(true);
-		homeBtn.setHoverEffect(Color.YELLOW, new Color(255, 255, 0, 10));
+		homeBtn.setHoverEffect(Color.decode("#74662e"), Color.decode("#ffde59"));
 		homeBtn.addActionListener(e -> {
 			controller.resumeGame();
 			layeredPane.remove(pausePanel);

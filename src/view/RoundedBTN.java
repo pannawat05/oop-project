@@ -44,12 +44,19 @@ public class RoundedBTN extends JButton {
 		addMouseListener(new java.awt.event.MouseAdapter() {
 			Color default_BG = getBackground();
 			Color default_FG = getForeground();
+
 			public void mouseEntered(java.awt.event.MouseEvent evt) {
 				setBackground(background);
 				setForeground(foreground);
 			}
 
 			public void mouseExited(java.awt.event.MouseEvent evt) {
+				setBackground(default_BG);
+				setForeground(default_FG);
+			}
+
+			@Override
+			public void mouseReleased(java.awt.event.MouseEvent evt) {
 				setBackground(default_BG);
 				setForeground(default_FG);
 			}

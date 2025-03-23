@@ -38,23 +38,19 @@ public class GameOver extends PagePanel {
 
 		// Play Again button
 		RoundedBTN playAgainButton = new RoundedBTN("play again");
-		playAgainButton.setBackground(new Color(0, 0, 0, 50));
-		playAgainButton.setOpaque(true);
-		playAgainButton.setContentAreaFilled(false);
-		playAgainButton.setFocusPainted(false);
+		playAgainButton.setBackground(new Color(255,255,255));
+		playAgainButton.setOpaque(false);
 		playAgainButton.setBorderPainted(true);
-		playAgainButton.setHoverEffect(Color.YELLOW, new Color(255, 255, 0, 10));
+		playAgainButton.setHoverEffect(Color.decode("#74662e"), Color.decode("#ffde59"));
 		playAgainButton.addActionListener(e -> controller.switchPage(Page.GAME_PLAY));
 		add(playAgainButton);
 
 		// Back to Home button
 		RoundedBTN homeButton = new RoundedBTN("back to home");
-		homeButton.setBackground(new Color(0, 0, 0, 50));
-		homeButton.setOpaque(true);
-		homeButton.setContentAreaFilled(false);
-		homeButton.setFocusPainted(false);
+		homeButton.setBackground(new Color(255,255,255));
+		homeButton.setOpaque(false);
 		homeButton.setBorderPainted(true);
-		homeButton.setHoverEffect(Color.YELLOW, new Color(255, 255, 0, 10));
+		homeButton.setHoverEffect(Color.decode("#74662e"), Color.decode("#ffde59"));
 		homeButton.addActionListener(e -> controller.switchPage(Page.HOME));
 		add(homeButton);
 
