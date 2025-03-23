@@ -23,7 +23,7 @@ public class Controller {
 		ui = new UIManager(this);
 		state = new GameState();
 		correctSound = new MusicPlayer("resources/sounds/correctSound.wav");
-	    gameOverSound = new MusicPlayer("resources/sounds/GameOver.wav");
+		gameOverSound = new MusicPlayer("resources/sounds/GameOver.wav");
 	}
 
 	public void switchPage(Page page) {
@@ -68,6 +68,7 @@ public class Controller {
 	}
 
 	public void checkSequence() {
+		// System.out.println("Over: " + !state.checkInput());
 		if (!state.checkInput()) {
 			try {
 				Thread.sleep(1000);
@@ -89,7 +90,7 @@ public class Controller {
 	}
 
 	public void gameOver() {
-		gameOverSound.playSound();
+		// gameOverSound.playSound();
 		switchPage(Page.GAME_OVER);
 	}
 }
