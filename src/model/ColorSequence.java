@@ -30,10 +30,9 @@ public class ColorSequence {
 	}
 
 	public boolean isSubset(List<Color> subSet) {
-		Set<Color> mainSetHash = new HashSet<>(sequence);
-		return subSet.stream().allMatch(mainSetHash::contains);
+		if (subSet.isEmpty() || subSet.size() > sequence.size()) return false;
+		return sequence.subList(0, subSet.size()).equals(subSet);
 	}
-
 	public boolean isEqual(ArrayList<Color> subSet) {
 		return sequence.equals(subSet);
 	}
