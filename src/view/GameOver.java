@@ -40,7 +40,7 @@ public class GameOver extends PagePanel {
 		RoundedBTN playAgainButton = new RoundedBTN("play again");
 		playAgainButton.setForeground(Color.WHITE);
 		playAgainButton.setBackground(new Color(0, 0, 0, 50));
-		playAgainButton.setOpaque(false);
+		playAgainButton.setOpaque(true);
 		playAgainButton.setContentAreaFilled(false);
 		playAgainButton.setFocusPainted(false);
 		playAgainButton.setBorderPainted(true);
@@ -52,7 +52,7 @@ public class GameOver extends PagePanel {
 		RoundedBTN homeButton = new RoundedBTN("back to home");
 		homeButton.setForeground(Color.WHITE);
 		homeButton.setBackground(new Color(0, 0, 0, 50));
-		homeButton.setOpaque(false);
+		homeButton.setOpaque(true);
 		homeButton.setContentAreaFilled(false);
 		homeButton.setFocusPainted(false);
 		homeButton.setBorderPainted(true);

@@ -67,7 +67,7 @@ public class Home extends PagePanel {
 		// Button Start -------------------------------
 		RoundedBTN startBTN = new RoundedBTN("Start");
 		startBTN.setForeground(Color.WHITE);
-		startBTN.setBackground(new Color(0, 0, 0, 50));
+		startBTN.setBackground(new Color(0, 0, 0));
 		startBTN.setOpaque(false);
 		startBTN.setContentAreaFilled(false);
 		startBTN.setFocusPainted(false);

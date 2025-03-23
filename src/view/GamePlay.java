@@ -122,7 +122,7 @@ public class GamePlay extends PagePanel {
 		RoundedBTN continueBtn = new RoundedBTN("Continue");
 		continueBtn.setForeground(Color.black);
 		continueBtn.setBackground(new Color(255, 255, 255, 50));
-		continueBtn.setOpaque(false);
+		continueBtn.setOpaque(true);
 		continueBtn.setBorderPainted(true);
 		continueBtn.setHoverEffect(Color.YELLOW, new Color(255, 255, 0, 10));
 		continueBtn.addActionListener(e -> {
@@ -136,7 +136,7 @@ public class GamePlay extends PagePanel {
 		RoundedBTN restart = new RoundedBTN("Restart");
 		restart.setForeground(Color.black);
 		restart.setBackground(new Color(255, 255, 255, 50));
-		restart.setOpaque(false);
+		restart.setOpaque(true);
 		restart.setBorderPainted(true);
 		restart.setHoverEffect(Color.YELLOW, new Color(255, 255, 0, 10));
 		restart.addActionListener(e -> {
@@ -151,7 +151,7 @@ public class GamePlay extends PagePanel {
 		RoundedBTN homeBtn = new RoundedBTN("Back to Home");
 		homeBtn.setForeground(Color.black);
 		homeBtn.setBackground(new Color(255, 255, 255, 50));
-		homeBtn.setOpaque(false);
+		homeBtn.setOpaque(true);
 		homeBtn.setBorderPainted(true);
 		homeBtn.setHoverEffect(Color.YELLOW, new Color(255, 255, 0, 10));
 		homeBtn.addActionListener(e -> {
@@ -276,5 +276,6 @@ public class GamePlay extends PagePanel {
 
 	@Override
 	public void onClose() {
+		roundCountDown.stopSound();
 	}
 }
