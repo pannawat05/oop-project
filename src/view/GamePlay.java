@@ -30,14 +30,25 @@ public class GamePlay extends PagePanel {
 	private JLabel scoreLabel;
 	private JLabel hightScoreLabel;
 	private MusicPlayer roundCountDown;
-	private ArrayList<MusicPlayer> clickBTN;
+	private ArrayList<MusicPlayer> clickBTNSound;
 	private final int FLASH_TIME = 650;
 
 	public GamePlay(Controller controller) {
 		super(controller);
 		this.simonBTN = new ArrayList<>();
 		this.roundCountDown = new MusicPlayer("resources/sounds/round_coutdown.wav");
-		this.clickBTN = new ArrayList<>();
+		this.clickBTNSound = new ArrayList<>();
+
+		String[] musicPath = {
+			"resources/sounds/RED.wav",
+			"resources/sounds/GREEN.wav",
+			"resources/sounds/BLUE.wav",
+			"resources/sounds/YELLOW.wav"
+		};
+		for (String path : musicPath) {
+			MusicPlayer btnSound = new MusicPlayer(path);
+			clickBTNSound.add(btnSound);
+		}
 		setLayout(null);
 		setBackground(Color.decode("#111111"));
 		drawPage();
@@ -105,7 +116,7 @@ public class GamePlay extends PagePanel {
 		add(layeredPane);
 
 		for (int i = 0; i < SimonColor.DEFAULT.size(); i++) {
-			SimonBTN btn = new SimonBTN(SimonColor.DEFAULT.get(i), SimonColor.FLASH.get(i), FLASH_TIME);
+			SimonBTN btn = new SimonBTN(SimonColor.DEFAULT.get(i), SimonColor.FLASH.get(i), FLASH_TIME, clickBTNSound.get(i));
 			btn.addActionListener(e -> {
 				controller.onUserInput(btn.getDefaultColor());
 				SimonBTN.setDisableByFlashTime(simonBTN);
@@ -215,7 +226,7 @@ public class GamePlay extends PagePanel {
 	}
 
 	public void setEnableBTN(boolean enable) {
-		System.out.println("setEnableBTN: " + enable);
+		// System.out.println("setEnableBTN: " + enable);
 		SwingUtilities.invokeLater(() -> simonBTN.forEach(btn -> btn.setEnabled(enable)));
 	}
 
@@ -274,5 +285,6 @@ public class GamePlay extends PagePanel {
 	@Override
 	public void onClose() {
 		roundCountDown.stopSound();
+
 	}
 }

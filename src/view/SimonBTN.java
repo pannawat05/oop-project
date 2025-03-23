@@ -26,10 +26,11 @@ public class SimonBTN extends JButton {
 		this.buttonSound = new MusicPlayer(path);
 	}
 
-	public SimonBTN(Color defaultColor, Color flash, int flashTime) {
+	public SimonBTN(Color defaultColor, Color flash, int flashTime, MusicPlayer sound) {
 		super();
 		this.defaultColor = defaultColor;
 		this.flash = flash;
+		this.buttonSound = sound;
 		SimonBTN.flashTime = flashTime;
 		drawBTN();
 	}
@@ -55,9 +56,11 @@ public class SimonBTN extends JButton {
 	}
 
 	public void flashing() {
+		buttonSound.playSound();
 		setBackground(flash);
 		Timer timer = new javax.swing.Timer(flashTime, e -> {
 			setBackground(defaultColor);
+			buttonSound.stopSound();
 		});
 		timer.setRepeats(false);
 		timer.start();

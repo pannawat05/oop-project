@@ -70,12 +70,7 @@ public class Controller {
 	public void checkSequence() {
 		// System.out.println("Over: " + !state.checkInput());
 		if (!state.checkInput()) {
-			try {
-				Thread.sleep(1000);
 				gameOver();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		} else if (state.checkIsComplete()) {
 			correctSound.playSound();
 			state.increteScore();
@@ -90,7 +85,12 @@ public class Controller {
 	}
 
 	public void gameOver() {
-		gameOverSound.playSound();
-		switchPage(Page.GAME_OVER);
+		try {
+			gameOverSound.playSound();
+			Thread.sleep(1000);
+			switchPage(Page.GAME_OVER);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 }
