@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -150,7 +149,9 @@ public class GamePlay extends PagePanel {
 		restart.setHoverEffect(Color.decode("#74662e"), Color.decode("#ffde59"));
 		restart.addActionListener(e -> {
 			controller.resumeGame();
-			controller.startGame();
+			onClose();
+			controller.switchPage(Page.GAME_PLAY);
+			// controller.startGame();
 			layeredPane.remove(pausePanel);
 			layeredPane.revalidate();
 			layeredPane.repaint();
@@ -273,7 +274,7 @@ public class GamePlay extends PagePanel {
 
 	public void updateScore(Score score) {
 		scoreLabel.setText("Score: " + score.getScore());
-		hightScoreLabel.setText("Hight Score: " + Score.HIGHT_SCORE);
+		hightScoreLabel.setText("High Score: " + Score.HIGHT_SCORE);
 	}
 
 	@Override

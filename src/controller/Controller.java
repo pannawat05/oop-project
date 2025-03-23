@@ -68,7 +68,7 @@ public class Controller {
 	}
 
 	public void checkSequence() {
-		// System.out.println("Over: " + !state.checkInput());
+		System.out.println("Over: " + !state.checkInput());
 		if (!state.checkInput()) {
 				gameOver();
 		} else if (state.checkIsComplete()) {
