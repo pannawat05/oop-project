@@ -1,5 +1,5 @@
 
-import src.SimonGame;
+import abc.SimonGame;
 
 public class Main {
     public static void main(String[] args) {
