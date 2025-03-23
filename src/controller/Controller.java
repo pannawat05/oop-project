@@ -36,6 +36,8 @@ public class Controller {
 
 	public void startGame() {
 		state.startGame();
+		SimonColor.reset();
+		ui.swapSimonBTN();;
 		ui.playSequence();
 	}
 

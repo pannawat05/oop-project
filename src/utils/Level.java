@@ -5,7 +5,7 @@ public enum Level {
 	HARD;
 
 	public static Level getLevel(int score) {
-		if (score >= 5) {
+		if (score >= 1) {
 			System.out.println("Hard");
 			return HARD;
 		}

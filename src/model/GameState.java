@@ -2,6 +2,8 @@ package model;
 
 import java.awt.Color;
 
+import utils.SimonColor;
+
 public class GameState {
 
 	private Score score;
